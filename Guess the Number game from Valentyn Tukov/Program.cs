@@ -3,35 +3,47 @@
     namespace GuessTheNumberGameFromValentynTukov
 {
         class Program
-    {
+    { 
+        static int MyRandom() 
+        {
+            
+        Random random = new Random();
+        return random.Next(1, 101);
+
+        }
+    
         static void Main(string[] args)
         {
-            Random random = new Random();
-            int guessNumber = random.Next(1, 101);
 
             Console.WriteLine("Hi, this is the Guess the Number game!");
             Console.WriteLine("A number from 1 to 100 inclusive was guessed. You have 10 attempts. Try to guess the number!");
 
+            
             int attempts = 0;
             int allAttempts = 10;
-
+           
+            int targetNumber = MyRandom();  
             while (attempts < allAttempts)
             {
                
 
-                attempts = attempts + 1;
+                attempts ++;
 
                 Console.WriteLine("It is your " + attempts + " attemtsw. Type the number and press the ENTER");
 
-
-                int number = int.Parse(Console.ReadLine());
-
-                if (number == guessNumber)
+                
+                if (!int.TryParse(Console.ReadLine(), out int number)) // inputs verification for been numbers.
                 {
-                    Console.WriteLine($"Congratulations! You guessed the number {guessNumber} in {attempts} attempts.");
+                    Console.WriteLine("Invalid input. Please enter a valid integer.");
+                    continue;
+                }
+
+                if (number == targetNumber)
+                {
+                    Console.WriteLine($"Congratulations! You guessed the number {targetNumber} in {attempts} attempts.");
                     break;
                 }
-                else if (number < guessNumber)
+                else if (number < targetNumber)
                 {
                     Console.WriteLine("Your guess is too low. You may try again!");
                 }
@@ -43,9 +55,9 @@
 
             if (attempts == allAttempts)
             {
-                Console.WriteLine($"Sorry, you have all " + allAttempts + "The guess number was " + guessNumber);
+                Console.WriteLine($"Sorry, you have all {allAttempts} The guess number was {targetNumber}");
             }
-            Console.ReadLine();
+            Console.ReadLine(); 
         }
     }
    
